@@ -10,6 +10,10 @@ if(!empty($_FILES['userfile']['name'])){
 	$file -> fileUpload();	
 	$article->img_src = $file -> src;
 }
+
+elseif($article->inputValue()['img_src'] != "images/placeholder.jpg"){
+	$article->img_src = $article->inputValue()['img_src'];
+}
 else $article->img_src = "images/placeholder.jpg";
 
 if(!empty($_POST)){
@@ -38,10 +42,35 @@ if(!empty($_POST)){
            <textarea class="form-control" required name="intro" id="intro" rows="5" ><?php echo $article->inputValue()['intro'];?></textarea>	  
     </div>
 	
-	<div class="form-group">
+	<div class="form-group clearfix" id="miniimg">
+	<img src="../<?php echo $article->inputValue()['img_src'] ?>" alt="" class="pull-left" style="margin:0 15px 0 0; height:100px;">
 	<label for="userfile">Img:</label>
-	<input type="file" name="userfile" id="userfile">
+	<input type="file" id="file" name="userfile">
 	</div>
+<script>
+var file = document.getElementById("file");
+file.onchange=function(){
+	var upload_file=file.files[0];
+	var form=new FormData();
+	form.append("userfile",upload_file);
+
+	var xhr=new XMLHttpRequest();
+	xhr.open("POST","core/AjaxFileupload.php",true);
+	xhr.send(form);
+
+	xhr.onreadystatechange = function(){
+	if(xhr.readyState == 4){
+		var node = document.createElement("SPAN");
+		node.innerHTML = xhr.responseText;
+		var list = document.getElementById("miniimg");
+		list.removeChild(list.childNodes[1]);
+		list.insertBefore(node, list.childNodes[1]);
+		}
+	}
+}
+
+
+</script>	
 	
     <div class="form-group">
       <label for="category_id">category_id:</label>

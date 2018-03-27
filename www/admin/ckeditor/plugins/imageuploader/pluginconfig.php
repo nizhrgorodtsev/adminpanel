@@ -162,3 +162,8 @@ $foldershistory[] = $useruploadfolder;
     $useruploadpath = $usersiteroot."$useruploadfolder/";
     $foldershistory[] = "nizhegorodtsev/BD/www/images";
         
+
+    $useruploadfolder = "nizhegorodtsev/AJAX/www/images";
+    $useruploadpath = $usersiteroot."$useruploadfolder/";
+    $foldershistory[] = "nizhegorodtsev/AJAX/www/images";
+        

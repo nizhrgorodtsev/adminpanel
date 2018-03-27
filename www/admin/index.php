@@ -43,8 +43,10 @@ function __autoload($class_name){ include "core/" . $class_name . "." . "php";}
         <?php active('dashboard')?><a href="?page=dashboard">Dashboard</a></li>
         <?php active('menu')?><a href="?page=menu">Menu</a></li>
         <?php active('article')?><a href="?page=article">Article</a></li>
-        <?php active('allpages')?><a href="?page=allpages">All Pages</a></li>
+        <?php active('allpages')?><a href="?page=allpages">Pages</a></li>
 		<?php active('category')?><a href="?page=category">Category</a></li>
+		<?php active('users')?><a href="?page=users">Users</a></li>
+		<?php active('comments')?><a href="?page=comments">Comments</a></li>
       </ul><br>
     </div>
 

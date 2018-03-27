@@ -13,6 +13,7 @@ class Article{
 	public $date_;
 	public $id;
 	public $img_src;
+	public $pag;
 	
 	public function allArticle(){
 		$this->article = BD::conection()->query('SELECT * FROM `article`');
@@ -72,11 +73,19 @@ class Article{
 		$this->stmt -> execute();
 	}
 	public function buildArticle(){
+		$this->sql = ('SELECT * FROM `article` WHERE category_id = ? AND status = 1 ORDER BY `date_` DESC LIMIT ?, 3');
+		$this->stmt = BD::conection()->prepare($this->sql);
+		$this->stmt -> bindValue(1, $this->category_id);
+		$this->stmt -> bindValue(2, $this->pag, PDO::PARAM_INT);
+		$this->stmt -> execute();
+		return $this -> stmt -> fetchAll(PDO::FETCH_ASSOC);		
+	}
+	public function countArticle(){
 		$this->sql = ('SELECT * FROM `article` WHERE category_id = ? AND status = 1 ORDER BY `date_` DESC');
 		$this->stmt = BD::conection()->prepare($this->sql);
 		$this->stmt -> bindValue(1, $this->category_id);
 		$this->stmt -> execute();
-		return $this -> stmt -> fetchAll(PDO::FETCH_ASSOC);		
+		return count($this -> stmt -> fetchAll(PDO::FETCH_ASSOC));	
 	}
 	public function buildPost(){
 		$this->sql = ('SELECT * FROM `article` WHERE id = ?');
@@ -84,6 +93,6 @@ class Article{
 		$this->stmt -> bindValue(1, $this->id);
 		$this->stmt -> execute();
 		return $this -> stmt -> fetch(PDO::FETCH_ASSOC);		
-	}	
+	}
 }
 ?>
