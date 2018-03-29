@@ -23,7 +23,8 @@ if(!empty($_POST)){
 	$article->keywords = $_POST["keywords"];
 	$article->description = $_POST["description"];
 	$article->status = $_POST["status"];
-	$article->date_ = $_POST["date_"];
+	//$article->date_ = $_POST["date_"];
+	$article->date_ = date("Y-m-d H:i:s");
 	$article->content = $_POST["content"];
 	
 	$article->aditArticle();
@@ -87,11 +88,11 @@ file.onchange=function(){
     <div class="form-group">
       <label for="status">status:</label>
       <input type="text" class="form-control" id="status" required name="status" value="<?php echo $article->inputValue()['status'];?>">
-    </div>	
+    </div><!--	
     <div class="form-group">
       <label for="date_">date_:</label>
-      <input type="date" class="form-control" id="date_" required name="date_" value="<?php echo $article->inputValue()['date_'];?>">
-    </div>
+      <input type="date" class="form-control" id="date_" required name="date_" value="<?php //echo $article->inputValue()['date_'];?>">
+    </div>-->
 	<div class="form-group">
       <label for="content">content:</label>
             <textarea name="content" id="content" rows="10">

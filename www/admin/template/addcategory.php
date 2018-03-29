@@ -19,6 +19,7 @@ if(!empty($_POST)){
 	$category->name = $_POST["name"];
 	$category->status = $_POST["status"];
 	$category->orders = $_POST["orders"];
+	$category->date_ = date("Y-m-d H:i:s");
 	
 	$category->addCategory();
 	header("Location: index.php?page=category");

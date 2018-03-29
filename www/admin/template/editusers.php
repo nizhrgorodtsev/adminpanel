@@ -10,6 +10,7 @@ if(!empty($_POST)){
 	$users->password = $_POST["password"];
 	$users->phone = $_POST["phone"];
 	$users->status = $_POST["status"];
+	$users->date_ = date("Y-m-d H:i:s");
 	
 	$users->creatHash();
 	$users->aditUsers();

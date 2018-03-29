@@ -1,5 +1,5 @@
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
-    .row.content {height: 1500px}
+    /*.row.content {height: 1500px;}*/
     
     /* Set gray background color and 100% height */
     .sidenav {
@@ -13,18 +13,56 @@
       color: white;
       padding: 15px;
     }
-    
+	.content{
+		background:#f2f4f5;
+    }
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
         height: auto;
         padding: 15px;
       }
-      .row.content {height: auto;} 
+      .row.content {
+	  height: auto;
+	  } 
     }
+	
 	li ul li{
 		padding-left:15px;
 	}
 	#mainheader{
 		text-transform:capitalize;
+		
 	}
+	.dashboard{
+		background:#fff;
+		padding:5px 0;
+		margin-bottom:30px;
+	}
+	.dashboard  h2{
+		padding:50px 0;
+		color:#fff;
+	}
+	.dashboard  p{
+		margin-left:15px
+	}
+	.dashboard  p.text-info{
+		margin-bottom:-10px;
+		margin-top:5px;
+	}
+	.separator{
+		height:30px;
+	}
+	.blue{background:#2996cc;}
+	.green{background:#4ab300;}
+	.fiol{background:#9500df;}
+	.brown{background:#63526b;}
+	.oliv{background:#556B2F;}
+	.cyan{background:#008B8B;}
+	
+	.run{
+		font-weight:bold;
+		font-size:4em;
+	}
+
+	

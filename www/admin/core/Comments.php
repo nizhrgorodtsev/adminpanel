@@ -69,6 +69,10 @@
 			$this->stmt -> bindValue(1, $this->post_id);
 			$this->stmt -> execute();
 			return count($this -> stmt -> fetchAll(PDO::FETCH_ASSOC));	
+		}
+		public function lastChange(){
+			$this->sql = BD::conection()->query('SELECT `date_` FROM `comments` ORDER BY `date_` DESC');
+			return $this->sql -> fetchColumn();			
 		}		
 	}
 ?>

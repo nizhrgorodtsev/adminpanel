@@ -39,6 +39,7 @@ if(!empty($_POST)){
 	$data->status = $_POST["status"];
 	$data->orders = $_POST["orders"];
 	$data->content = $_POST["content"];
+	$data->date_ = date("Y-m-d H:i:s");
 	
 	$data->addPage();
 	header("Location: index.php?page=allpages");

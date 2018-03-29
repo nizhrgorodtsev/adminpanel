@@ -1,5 +1,6 @@
 <?php 
 function __autoload($class_name){ include "core/" . $class_name . "." . "php";}
+date_default_timezone_set('Europe/Kiev'); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +16,25 @@ function __autoload($class_name){ include "core/" . $class_name . "." . "php";}
 
 </head>
 <body>
+<script>
+$(function(){
+	$(".content").css("min-height", $(window).height() - $("footer").height());
+	$(".sidenav").css("height", $(".content").height());
+	run();
+});
+function run(){
+	$(".run").each(function(){
+		var x=$(this).html();
+		$(this).animate({ num: x }, {
+			duration: 1000,
+			step: function (num){
+				this.innerHTML = (num).toFixed(0);
+			}
+		});
+	});
+}
+</script>
+
 	  <?php 
 		function active($param){
 			if(!empty($_GET['page'])){
@@ -53,12 +73,12 @@ function __autoload($class_name){ include "core/" . $class_name . "." . "php";}
 
     <div class="col-sm-9">
 		<div class="page-header">
-		  <h3 id="mainheader" class="text-center">  
+		  <h1 id="mainheader" class="text-center text-info"><strong> 
 		  <?php 
 			if(!empty($_GET["page"])) echo $_GET["page"];
 			else echo "dashboard";
 		  ?>
-		  </h3>
+		  </strong></h3>
 		</div>
 		
 	  <?php 
@@ -70,7 +90,7 @@ function __autoload($class_name){ include "core/" . $class_name . "." . "php";}
 </div>
 
 <footer class="container-fluid">
-  <p class="text-center">Footer Text</p>
+  <p class="text-center">© 2018 Nizhegorodtsrv</p>
 </footer>
 
 </body>

@@ -13,6 +13,7 @@
 		public $salt;
 		public $hash;
 		public $newhash;
+		public $date_;
 		
 		public function buildUsers(){
 			$this->user = BD::conection()->query('SELECT * FROM `users` WHERE `status` = 1');
@@ -23,7 +24,7 @@
 			return $this -> user -> fetchAll(PDO::FETCH_ASSOC);
 		}
 		public function addUsersItem(){
-			$this->sql = ('INSERT INTO `users`(`name`, `lastname`, `mail`, `password`, `salt`, `phone`, `status`) VALUES (?,?,?,?,?,?,?)');
+			$this->sql = ('INSERT INTO `users`(`name`, `lastname`, `mail`, `password`, `salt`, `phone`, `status`, `date_`) VALUES (?,?,?,?,?,?,?,?)');
 			$this->stmt = BD::conection()->prepare($this->sql);
 			$this->stmt -> bindValue(1, $this->name);
 			$this->stmt -> bindValue(2, $this->lastname);
@@ -32,6 +33,7 @@
 			$this->stmt -> bindValue(5, $this->salt);
 			$this->stmt -> bindValue(6, $this->phone);
 			$this->stmt -> bindValue(7, $this->status);
+			$this->stmt -> bindValue(8, $this->date_);
 			$this->stmt -> execute();
 		}
 		public function inputValue(){
@@ -49,7 +51,8 @@
 			`password` = ?,
 			`salt` = ?,
 			`phone` = ?,
-			`status` = ?
+			`status` = ?,
+			`date_` = ?
 			WHERE `id` = ?');
 			$this->stmt = BD::conection()->prepare($this->sql);
 			$this->stmt -> bindValue(1, $this->name);
@@ -59,7 +62,8 @@
 			$this->stmt -> bindValue(5, $this->salt);
 			$this->stmt -> bindValue(6, $this->phone);
 			$this->stmt -> bindValue(7, $this->status);
-			$this->stmt -> bindValue(8, $this->id);
+			$this->stmt -> bindValue(8, $this->date_);
+			$this->stmt -> bindValue(9, $this->id);
 			$this->stmt -> execute();		
 		}
 		public function deleteUsers(){
@@ -92,5 +96,9 @@
 			if($this->hash == $this->newhash) echo '<hr><p class="bg-success">This text indicates success.</p>';
 			else echo '<hr><p class="bg-danger">This text represents danger.</p>';
 		}
+		public function lastChange(){
+			$this -> user = BD::conection()->query('SELECT `date_` FROM `users` ORDER BY `date_` DESC');
+			return $this -> user -> fetchColumn();			
+		}		
 	}
 ?>

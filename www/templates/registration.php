@@ -24,6 +24,7 @@
   </form>
   
   <?php 
+date_default_timezone_set('Europe/Kiev');  
 $users = new Users;
 if(!empty($_POST)){
 	$users->name = $_POST["name"];
@@ -32,6 +33,7 @@ if(!empty($_POST)){
 	$users->password = $_POST["password"];
 	$users->phone = $_POST["phone"];
 	$users->status = '1';
+	$users->date_ = date("Y-m-d H:i:s");
 	
 	$users->creatHash();
 	$users->addUsersItem();

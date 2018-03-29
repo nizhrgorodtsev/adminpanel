@@ -24,6 +24,7 @@ if(!empty($_POST)){
 	$menu->page_id = $_POST["page_id"];
 	$menu->status = $_POST["status"];
 	$menu->orders = $_POST["orders"];
+	$menu->date_ = date("Y-m-d H:i:s");
 	
 	$menu->addMenuItem();
 	header("Location: index.php?page=menu");

@@ -10,13 +10,14 @@ class Page{
 	public $orders;
 	public $content;
 	public $id;
+	public $date_;
 	
 	public function allPage(){
 		$this->page = BD::conection()->query('SELECT * FROM `page`');
 		return $this -> page -> fetchAll(PDO::FETCH_ASSOC);
 	}
 	public function addPage(){
-		$this->sql = ('INSERT INTO `page`(`title`, `keywords`, `description`, `status`, `orders`, `content`) VALUES (?,?,?,?,?,?)');
+		$this->sql = ('INSERT INTO `page`(`title`, `keywords`, `description`, `status`, `orders`, `content`, `date_`) VALUES (?,?,?,?,?,?,?)');
 		$this->stmt = BD::conection()->prepare($this->sql);
 		$this->stmt -> bindValue(1, $this->title);
 		$this->stmt -> bindValue(2, $this->keywords);
@@ -24,6 +25,7 @@ class Page{
 		$this->stmt -> bindValue(4, $this->status);
 		$this->stmt -> bindValue(5, $this->orders);
 		$this->stmt -> bindValue(6, $this->content);
+		$this->stmt -> bindValue(7, $this->date_);
 		$this->stmt -> execute();
 	}
 	public function aditPage(){
@@ -33,7 +35,8 @@ class Page{
 		`description` = ?,
 		`status` = ?,
 		`orders` = ?,
-		`content` = ?
+		`content` = ?,
+		`date_` = ?
 		WHERE `id` = ?');
 		$this->stmt = BD::conection()->prepare($this->sql);
 		$this->stmt -> bindValue(1, $this->title);
@@ -42,7 +45,8 @@ class Page{
 		$this->stmt -> bindValue(4, $this->status);
 		$this->stmt -> bindValue(5, $this->orders);
 		$this->stmt -> bindValue(6, $this->content);
-		$this->stmt -> bindValue(7, $this->id);
+		$this->stmt -> bindValue(7, $this->date_);
+		$this->stmt -> bindValue(8, $this->id);
 		$this->stmt -> execute();		
 	}
 	public function inputValue(){
@@ -65,5 +69,9 @@ class Page{
 		$this->stmt -> execute();
 		return $this -> stmt -> fetch(PDO::FETCH_ASSOC);		
 	}
+	public function lastChange(){
+		$this -> page = BD::conection()->query('SELECT `date_` FROM `page` ORDER BY `date_` DESC');
+		return $this -> page -> fetchColumn();			
+	}	
 }
 ?>

@@ -94,5 +94,9 @@ class Article{
 		$this->stmt -> execute();
 		return $this -> stmt -> fetch(PDO::FETCH_ASSOC);		
 	}
+	public function lastChange(){
+			$this -> article = BD::conection()->query('SELECT `date_` FROM `article` ORDER BY `date_` DESC');
+			return $this -> article -> fetchColumn();			
+		}	
 }
 ?>
