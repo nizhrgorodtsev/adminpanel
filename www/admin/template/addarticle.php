@@ -1,4 +1,5 @@
 <?php 
+$category = new Category;
 $data = new Article;
 $file = new Fileupload;
 
@@ -14,6 +15,7 @@ else $data->img_src = "images/placeholder.jpg";
 if(!empty($_POST)){
 	$data->title = $_POST["title"];
 	$data->intro = $_POST["intro"];
+	$data->category_name = $_POST["category_name"];
 	$data->category_id = $_POST["category_id"];
 	$data->keywords = $_POST["keywords"];
 	$data->description = $_POST["description"];
@@ -69,9 +71,36 @@ file.onchange=function(){
 </script>	
 	
     <div class="form-group">
-      <label for="category_id">category_id:</label>
-      <input type="text" class="form-control" id="category_id" required name="category_id" placeholder="">
-    </div>	
+      <label for="category_id">category_name:</label>
+      <select class="form-control" id="category_name" required name="category_name" onchange="changeCategory()">
+		<option>Select category</option>
+		<?php 
+		$arr = $category -> allCategory();
+		foreach($arr as $value){
+			echo "<option>$value[name]</option>";
+		}
+		?>
+	  </select>
+	  <input type="hidden" name="category_id" id="categoryid">
+<script>
+function changeCategory() {
+	var x = document.getElementById("category_name");
+	var i = x.selectedIndex;
+	var option = x.options[i].text;
+	var id = document.getElementById("categoryid");
+	var ctid = new XMLHttpRequest();
+	ctid.open("POST","template/ajaxCategoryId2.php",true);
+	ctid.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	ctid.send('category_name='+option);
+
+	ctid.onreadystatechange = function(){
+	if(ctid.readyState == 4){
+		id.setAttribute("value", ctid.responseText); 
+		}
+	}	
+}
+</script>  	  
+    </div>
     <div class="form-group">
       <label for="keywords">keywords:</label>
       <input type="text" class="form-control" id="keywords" required name="keywords" placeholder="">

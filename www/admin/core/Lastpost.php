@@ -6,7 +6,7 @@ class Lastpost{
 	public $id;
 	public $name_category;
 	public function lastPost(){
-		$this->sql = ('SELECT * FROM `article` ORDER BY `date_` DESC');
+		$this->sql = ('SELECT * FROM `article` WHERE `status` = 1 ORDER BY `date_` DESC');
 		$this->stmt = BD::conection()->prepare($this->sql);
 		$this->stmt -> execute();
 		return $this -> stmt -> fetchAll(PDO::FETCH_ASSOC);		

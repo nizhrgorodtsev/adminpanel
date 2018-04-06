@@ -25,7 +25,8 @@ if(!empty($_POST)){
     </div>
     <div class="form-group">
       <label for="status">status:</label>
-      <input type="text" class="form-control" id="status" required name="status" value="<?php echo $menu->inputValue()['status'];?>">
+	  <input type="hidden" id="on-off-switch-notext" name="status" value="<?php echo $menu->inputValue()['status'];?>">
+      <!--<input type="text" class="form-control" id="status" required name="status" value="<?php// echo $menu->inputValue()['status'];?>">-->
     </div>	
     <div class="form-group">
       <label for="orders">orders:</label>
@@ -34,4 +35,12 @@ if(!empty($_POST)){
 	
     <button type="submit" class="btn btn-success">Save</button>
   </form>
-  
+	
+	
+
+<script type="text/javascript">
+    new DG.OnOffSwitch({
+        el: '#on-off-switch-notext'
+    });
+</script>
+

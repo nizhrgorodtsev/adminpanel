@@ -1,4 +1,5 @@
 <?php
+$category = new Category;
 $article = new Article;
 $file = new Fileupload; 
 if(!empty($_GET["edit"])) $article->id = $_GET["edit"];
@@ -19,24 +20,31 @@ else $article->img_src = "images/placeholder.jpg";
 if(!empty($_POST)){
 	$article->title = $_POST["title"];
 	$article->intro = $_POST["intro"];
+	$article->category_name = $_POST["category_name"];
 	$article->category_id = $_POST["category_id"];
 	$article->keywords = $_POST["keywords"];
 	$article->description = $_POST["description"];
 	$article->status = $_POST["status"];
-	//$article->date_ = $_POST["date_"];
 	$article->date_ = date("Y-m-d H:i:s");
 	$article->content = $_POST["content"];
 	
 	$article->aditArticle();
 
 	header("Location: index.php?page=article");
+	/*
+	echo "<pre>"; 
+	print_r($_POST);
+	echo $article->category_id;
+	echo "</pre>";
+	*/
 }
+
 ?>
 
 <form action="" method="POST" enctype="multipart/form-data">
     <div class="form-group">
       <label for="title">title:</label>
-      <input type="text" class="form-control" id="title" required name="title" value="<?php echo $article->inputValue()['title'];?>">
+      <input type="text" class="form-control" id="title" required name="title" value="<?php echo htmlspecialchars($article->inputValue()['title']);?>">
     </div>
     <div class="form-group">
       <label for="intro">intro:</label>
@@ -69,13 +77,44 @@ file.onchange=function(){
 		}
 	}
 }
-
-
 </script>	
 	
     <div class="form-group">
-      <label for="category_id">category_id:</label>
-      <input type="text" class="form-control" id="category_id" required name="category_id" value="<?php echo $article->inputValue()['category_id'];?>">
+      <label for="category_id">category_name:</label>
+      <select class="form-control" id="category_name" required name="category_name" onchange="changeCategory()" data-edit="<?php echo $_GET["edit"]; ?>">
+		<?php 
+		$arr = $category -> allCategory();
+		foreach($arr as $value){
+			if($article->inputValue()['category_id'] !== $value["id"]){
+			echo "<option>$value[name]</option>";
+			}
+			else echo "<option selected>$value[name]</option>";
+		}
+		?>
+		
+	  </select>
+	  <input type="hidden" name="category_id" id="categoryid">
+<script>
+$(document).ready(function(){
+	changeCategory();
+});
+function changeCategory() {
+	var x = document.getElementById("category_name");
+	var i = x.selectedIndex;
+	var option = x.options[i].text;
+	var id = document.getElementById("categoryid");
+	var ctid = new XMLHttpRequest();
+	ctid.open("POST","template/ajaxCategoryId2.php",true);
+	ctid.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	ctid.send('category_name='+option);
+
+	ctid.onreadystatechange = function(){
+	if(ctid.readyState == 4){
+		id.setAttribute("value", ctid.responseText); 
+		}
+	}	
+}
+</script>   
     </div>	
     <div class="form-group">
       <label for="keywords">keywords:</label>
@@ -87,7 +126,8 @@ file.onchange=function(){
     </div>	
     <div class="form-group">
       <label for="status">status:</label>
-      <input type="text" class="form-control" id="status" required name="status" value="<?php echo $article->inputValue()['status'];?>">
+	  <input type="hidden" id="on-off-switch-notext" name="status" value="<?php echo $article->inputValue()['status'];?>">
+      <!--<input type="text" class="form-control" id="status" required name="status" value="<?php //echo $article->inputValue()['status'];?>">-->
     </div><!--	
     <div class="form-group">
       <label for="date_">date_:</label>
@@ -104,4 +144,8 @@ file.onchange=function(){
     </div>	
     <button type="submit" class="btn btn-success">Save</button>
   </form>
-  
+<script type="text/javascript">
+    new DG.OnOffSwitch({
+        el: '#on-off-switch-notext'
+    });
+</script>  

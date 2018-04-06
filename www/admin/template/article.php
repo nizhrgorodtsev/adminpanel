@@ -9,7 +9,7 @@
 			<th>title</th>
 			<th>img_src</th>
 			<th>status</th>
-			<th>category_id</th>
+			<th>category_name</th>
 			<th>date_</th>
 			<th></th>
 			<th></th>
@@ -25,7 +25,7 @@ $data = new Article;
 			<td>$value[title]</td>
 			<td>$value[img_src]</td>
 			<td>$value[status]</td>
-			<td>$value[category_id]</td>
+			<td>$value[category_name]</td>
 			<td>$value[date_]</td>
 			<td>
 			<form action='' method='GET'>

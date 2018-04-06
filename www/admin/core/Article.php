@@ -14,13 +14,14 @@ class Article{
 	public $id;
 	public $img_src;
 	public $pag;
+	public $category_name;
 	
 	public function allArticle(){
-		$this->article = BD::conection()->query('SELECT * FROM `article`');
+		$this->article = BD::conection()->query('SELECT * FROM `article` ORDER BY `date_` DESC');
 		return $this -> article -> fetchAll(PDO::FETCH_ASSOC);
 	}
 	public function addArticle(){
-		$this->sql = ('INSERT INTO `article`(`title`, `intro`, `img_src`, `content`, `keywords`, `description`, `status`, `category_id`, `date_`) VALUES (?,?,?,?,?,?,?,?,?)');
+		$this->sql = ('INSERT INTO `article`(`title`, `intro`, `img_src`, `content`, `keywords`, `description`, `status`, `category_name`, `category_id`, `date_`) VALUES (?,?,?,?,?,?,?,?,?,?)');
 		$this->stmt = BD::conection()->prepare($this->sql);
 		$this->stmt -> bindValue(1, $this->title);
 		$this->stmt -> bindValue(2, $this->intro);
@@ -29,8 +30,9 @@ class Article{
 		$this->stmt -> bindValue(5, $this->keywords);
 		$this->stmt -> bindValue(6, $this->description);
 		$this->stmt -> bindValue(7, $this->status);
-		$this->stmt -> bindValue(8, $this->category_id);
-		$this->stmt -> bindValue(9, $this->date_);
+		$this->stmt -> bindValue(8, $this->category_name);
+		$this->stmt -> bindValue(9, $this->category_id);
+		$this->stmt -> bindValue(10, $this->date_);
 		
 		$this->stmt -> execute();
 	}
@@ -43,7 +45,8 @@ class Article{
 		`keywords` = ?,
 		`description` = ?,
 		`status` = ?,
-		`category_id` = ?,
+		`category_name` = ?,
+		`category_id` = ?,		
 		`date_` = ?
 		WHERE `id` = ?');
 		$this->stmt = BD::conection()->prepare($this->sql);
@@ -54,9 +57,10 @@ class Article{
 		$this->stmt -> bindValue(5, $this->keywords);
 		$this->stmt -> bindValue(6, $this->description);
 		$this->stmt -> bindValue(7, $this->status);
-		$this->stmt -> bindValue(8, $this->category_id);
-		$this->stmt -> bindValue(9, $this->date_);
-		$this->stmt -> bindValue(10, $this->id);
+		$this->stmt -> bindValue(8, $this->category_name);
+		$this->stmt -> bindValue(9, $this->category_id);
+		$this->stmt -> bindValue(10, $this->date_);
+		$this->stmt -> bindValue(11, $this->id);
 		$this->stmt -> execute();		
 	}
 	public function inputValue(){
@@ -97,6 +101,13 @@ class Article{
 	public function lastChange(){
 			$this -> article = BD::conection()->query('SELECT `date_` FROM `article` ORDER BY `date_` DESC');
 			return $this -> article -> fetchColumn();			
-		}	
+		}
+	public function categoryID(){
+		$this->sql = ('SELECT `id` FROM `category` WHERE `name` = ?');
+		$this->stmt = BD::conection()->prepare($this->sql);
+		$this->stmt -> bindValue(1, $this->category_name );
+		$this->stmt -> execute();
+		return $this -> stmt -> fetchColumn();
+	}
 }
 ?>
